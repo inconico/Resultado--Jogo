@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Resultado do Jogo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      text-align: center;
+      padding: 40px;
+    }
+    .card {
+      background: #292929;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    h1 {
+      color: #00e676;
+    }
+    .result {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+    input {
+      padding: 8px;
+      width: 300px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #00e676;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00c853;
+    }
+  </style>
+</head>
+<body>
+  <h1>Resultado do Jogo</h1>
+
+  <input type="number" id="numeroInput" placeholder="Digite um número base..." value="1444065691459952" />
+  <br>
+  <button onclick="mostrarResultados()">Gerar Resultados</button>
+
+  <div class="card" id="resultados" style="display:none;">
+    <div class="result" id="multiplicador"></div>
+    <div class="result" id="cor"></div>
+    <div class="result" id="numeroSorte"></div>
+    <div class="result" id="carta"></div>
+    <div class="result" id="dado"></div>
+  </div>
+
+  <script>
+    function gerarResultados(numeroBase) {
+      const multiplicador = (numeroBase % 10000) / 100;
+      const cor = (numeroBase % 2 === 0) ? "Preto" : "Vermelho";
+      const numeroSorte = numeroBase % 100;
+      const carta = (numeroBase % 52) + 1;
+      const dado = (numeroBase % 6) + 1;
+
+      return {
+        multiplicador: multiplicador.toFixed(2) + "x",
+        cor,
+        numeroSorte,
+        carta: "Carta #" + carta,
+        dado
+      };
+    }
+
+    function mostrarResultados() {
+      const numero = parseInt(document.getElementById("numeroInput").value);
+      if (isNaN(numero)) {
+        alert("Por favor, digite um número válido.");
+        return;
+      }
+
+      const r = gerarResultados(numero);
+      document.getElementById("multiplicador").textContent = "🎯 Multiplicador: " + r.multiplicador;
+      document.getElementById("cor").textContent = "🎨 Cor: " + r.cor;
+      document.getElementById("numeroSorte").textContent = "🍀 Número da Sorte: " + r.numeroSorte;
+      document.getElementById("carta").textContent = "🃏 " + r.carta;
+      document.getElementById("dado").textContent = "🎲 Dado: " + r.dado;
+
+      document.getElementById("resultados").style.display = "block";
+    }
+  </script>
+</body>
+</html>
